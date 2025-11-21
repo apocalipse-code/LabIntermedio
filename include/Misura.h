@@ -2,23 +2,22 @@
 #define Misura_h
 
 #include <ostream>
+#include "Lettura.h"
 
 class Misura{
 	public:
-		Misura();  //costruttore di default
-		explicit Misura(int dim);  //costruttore con parametro
-		
+		Misura();  //costruttore di default	
 		explicit Misura(const Lettura* arr); //costruttore con array come parametro 		
 	
 		const Lettura& get(int index) const; //ritorna un elemento all'indice passato
+		
+		class InvalidIndexException{}; //lanciata da get
 	private:
-		const static int DIM_ = 17; //dimensione del vettore stile C di Letture
-		const Lettura l_[DIM]; //vettore stile C di Letture
-}
+		static constexpr int DIM_ = 17; //dimensione del vettore stile C di Letture
+		Lettura letture_[DIM_]; //vettore stile C di Letture
+};
 
 //overloading operatore di stampa
-void operator<<(std:ostream os, Misura& m);
+std::ostream& operator<<(std::ostream& os, const Misura& m);
 
-#include "Misura.cpp"
-#include "Lettura.cpp"
 #endif 
