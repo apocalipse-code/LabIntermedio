@@ -16,28 +16,30 @@ double roll_a;		//accell. intorno all'asse r
 	
 // costruttore di default
 
-	Lettura()
+	Lettura();
 	
-	: yaw_v(0.0), yaw_a(0.0),	pitch_v(0.0), pitch_a(0.0),	roll_v(0.0), roll_a(0.0){};
-
+	//INIZIALIZZAZIONE DI DEFAULT			 yaw_v(0.0), yaw_a(0.0),	pitch_v(0.0), pitch_a(0.0),	roll_v(0.0), roll_a(0.0){};
+	
 // costruttore di parametri
 Lettura(double yVel, double yAcc, double pVel, double pAcc,double rVel, double rAcc)
 	
-		:	yaw_v(yVel), yaw_a(yAcc), pitch_v(pVel), pitch_a(pAcc), roll_v(rVel), roll_a(rAcc){};//assegno i parametri
+		:	yaw_v{yVel},yaw_a{yAcc} ,
+			pitch_v{pVel},pitch_a{pAcc},
+			roll_v{rVel},roll_a{rAcc}{};//parametri
 
 	};
 		
 //Operatore <<
 
-std :: ostream& operator<<(std::ostream& out, const Lettura& Letto)
+std::ostream& operator<<(std::ostream& out, const Lettura& Letto)
 
 		{
 			out<<"velocità intorno all'asse y  :  "<<Letto.yaw_v<<"\n";
-			out<<"accelerazione intorno all'asse y  :  "<<Letto.yaw_a<<"\n";
+			out<<"acc intorno all'asse y  :  "<<Letto.yaw_a<<"\n";
 			out<<"velocità intorno all'asse p  :  "<<Letto.pitch_v<<"\n";
-			out<<"accelerazione  intorno all'asse p  :  "<<Letto.pitch_a<<"\n";
+			out<<"acc intorno all'asse p  :  "<<Letto.pitch_a<<"\n";
 			out<<"velocità intorno all'asse r  :  "<<Letto.roll_v<<"\n";
-			out<<"accelerazione intorno all'asse r  :  "<<Letto.roll_a<<"\n";
+			out<<"acc intorno all'asse r  :  "<<Letto.roll_a<<"\n";
 
 		}
 
