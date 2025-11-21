@@ -1,24 +1,55 @@
-#ifndef Misura_h
-#define Misura_h
+#ifndef Misura_cpp
+#define Misura_cpp
 
-#include <ostream>
+#include <iostream>
+#include <stdexcept>
 
-class Misura{
-	public:
-		Misura();  //costruttore di default
-		explicit Misura(int dim);  //costruttore con parametro
-		
-		explicit Misura(const Lettura* arr); //costruttore con array come parametro 		
-	
-		const Lettura& get(int index) const; //ritorna un elemento all'indice passato
-	private:
-		const static int DIM_ = 17; //dimensione del vettore stile C di Letture
-		const Lettura l_[DIM]; //vettore stile C di Letture
+class Misura {
+
+private : 
+const static int Dim=17; // dimensione vettore stile c di Letture
+
+const Lettura I_[DIM]; //vettore stile c di Letture
+
+
+
+public :
+
+// Costruttore di default:
+// inizializza tutte le Lettura con i valori di default della struct Lettura
+Misura::Misura() : I_{} {};
+// Costruttore con parametro 
+Misura::Misura(int dim) : I_{} {
+    if (dim != DIM) {
+        std::<< "Errore: dimensione misura deve essere 17.\n";//in caso di errore di dimensione array
+    }
 }
 
-//overloading operatore di stampa
-void operator<<(std:ostream os, Misura& m);
+// Costruttore con array come parametro
+Misura::Misura(const Lettura* Array) {
+    for (int i = 0; i < DIM; ++i) {
+        I_[i] = Array[i];
+    }
+}
 
-#include "Misura.cpp"
+// Ritorna un elemento alll'indice passato
+const Lettura& Misura::get(int index) const {
+    if (index < 0 || index >= DIM_) {
+        throw std::out_of_range("Indice fuori dal range (0-16)");//eccezione in caso venga scritto un numero fuori range
+    }
+    return I_[index];
+}
+
+// Operatore <<
+std::ostream& operator<<(std::ostream& os, const Misura& m) {
+    os << "Misura composta da 17 letture:\n";
+    for (int i = 0; i < 17; ++i) {
+        os << "Lettura " << i << ":\n";
+        os << m.get(i) << "\n\n";
+    }
+    return os;
+}
+
+
 #include "Lettura.cpp"
 #endif 
