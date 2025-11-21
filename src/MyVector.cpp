@@ -217,14 +217,19 @@ T& MyVector<T>::pop_back(){
 template<class T>
 void MyVector<T>::reserve(int newsz){
 	if(newsz > fullsz){
-		T* elem2 = new T[newsz]; //creo una nuova memoria grande quanto richiesto
-		
-		std::copy(elem, elem+sz, elem2); //copio tutto lì
-		
-		delete[] elem; //elimino la memoria vecchia
-		elem = elem2; //sposto il puntatore alla memoria vecchia
-		elem2 = nullptr;  
-		fullsz = newsz; //aggiorno la nuova capacità del vettore
+		if(elem){
+			T* elem2 = new T[newsz]; //creo una nuova memoria grande quanto richiesto
+			
+			std::copy(elem, elem+sz, elem2); //copio tutto lì
+			
+			delete[] elem; //elimino la memoria vecchia
+			elem = elem2; //sposto il puntatore alla memoria vecchia
+			elem2 = nullptr;  
+			fullsz = newsz; //aggiorno la nuova capacità del vettore
+		} else{
+			fullsz = newsz;
+			elem = new T[fullsz];
+		}
 	}
 }
 
