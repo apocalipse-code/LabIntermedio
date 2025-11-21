@@ -50,6 +50,6 @@ std::ostream& operator<<(std::ostream& os, const Misura& m) {
     return os;
 }
 
-
+}
 #include "Lettura.cpp"
 #endif 
