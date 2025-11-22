@@ -37,7 +37,7 @@ InertialDriver::InertialDriver(const Misura* m){
 		}
 			
 		head_ = 0;
-		tail_ = dim-1;
+		tail_ = BUFFER_DIM_-1;
 	} else{
 		head_ = -1;
 		tail_ = -1;

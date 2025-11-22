@@ -1,7 +1,7 @@
 #include "../include/Misura.h"
 
 //costruttore di default
-Misura::Misura(){}
+Misura::Misura():letture{} {}
 
 //costruttore con parametro array di Letture
 //occorre che l'array passato sia esattamente di 17 elementi, altrimenti Undefined Behaviour
@@ -15,6 +15,18 @@ Misura::Misura(const Lettura* arr){
 	}
 }
 
+Misura::Misura(const Misura& m){
+	std::copy(m.letture_, m.letture_+DIM_, letture_);
+}
+
+
+Misura& Misura::operator=(const Misura& m){
+	if(this != &m){
+		std::copy(m.letture_, m.letture_+DIM_, letture_);
+	}
+	
+	return *this;
+}
 
 //funzione getter per gli elementi dell'array
 const Lettura& Misura::get(int index) const{
