@@ -135,9 +135,30 @@ const Lettura* InertialDriver::pop_front(){
 	return v_[aux];
 }
 
-void InertialDriver::clear_buffer(){}
+void InertialDriver::clear_buffer() {
+    // Reset dell'indice head_ (inizio buffer) e indice tail_ (fine buffer)
+    // Impostare head_ e tail_ a -1 implicando che non esiste un elemento valido all'inizio e alla dine
+    head_ = -1;
+    tail_ = -1;
+ 	// v_ potrebbe essere riusato successivamente e quindi non lo dealloco
+    // La gestione della memoria è delegata al distruttore della classe MyVector
+}
 
-const Lettura& get_reading(int index) const{}
+const Lettura& InertialDriver::get_reading(int index) const {
+    // Verifico se il buffer è vuoto: 
+	// Quando le condizioni di head_ e tail_ assumuno il valore di -1 contemporaneamente
+    if (isEmpty()) {
+        throw EmptyBufferException{};					// Se vuoto, lancio l'eccezione adeguata
+    }    
+    // Verificare che l'indice dato sia valido (compreso tra 0 e il numero di misure)
+
+    if (index < 0 || index >= Misura::DIM_ ) {
+        throw InvalidIndexException{}; 					// L'indice è fuori dal range valido
+    }
+
+    // Accedo al vettore usando l'operatore [] di MyVector
+    return v_[v_.getLast()].get(index);
+}
 
 std::ostream& operator<<(std::ostream& os, InertialDriver obj){
 	os << "[";
