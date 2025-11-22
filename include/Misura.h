@@ -2,14 +2,19 @@
 #define Misura_h
 
 #include <ostream>
-#include "Lettura.h"
+#include "./Lettura.h"
 
 class Misura{
 	public:
 		Misura();  //costruttore di default	
-		explicit Misura(const Lettura* arr); //costruttore con array come parametro 		
+		explicit Misura(const Lettura* arr); //costruttore con array come parametro 
+
+		//NOTA: DA FARE COSTRUTTORI E ASSEGNAZIONI DI COPIA E SPOSTAMENTO
 	
 		const Lettura& get(int index) const; //ritorna un elemento all'indice passato
+		
+		const Lettura* get_letture() const; //ritorna un puntatore const all'inizio del vettore
+		int size() const; //ritorna la dimensione del vettore di letture
 		
 		class InvalidIndexException{}; //lanciata da get
 	private:

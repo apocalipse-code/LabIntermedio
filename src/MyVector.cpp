@@ -1,4 +1,4 @@
-#include "MyVector.h"
+#include "../include/MyVector.h"
 
 //costruttore di default
 template<class T>
@@ -249,6 +249,3 @@ std::ostream& operator<<(std::ostream& os, const MyVector<T>& mv){
 	os << "]";
 	return os; 
 }
-
-
-

@@ -1,6 +1,7 @@
 #include <iostream>
-#include "Misura.h"
-#include "MyVector.h"
+#include "../include/Misura.h"
+#include "../include/MyVector.h"
+#include "../include/InertialDriver.h"
 
 //costruttore di default
 InertialDriver::InertialDriver():v_(BUFFER_DIM_), head_(-1), tail_(-1){}
@@ -26,16 +27,15 @@ InertialDriver::InertialDriver(std::initializer_list<Misura> values){
 
 
 //costruttore con array di Misure
-InertialDriver::InertialDriver(const Misura* m, int dim=0){
+//la dimensione dell'array passato deve essere tassativamente uguale a BUFFER_DIM_
+InertialDriver::InertialDriver(const Misura* m){
 	v_(BUFFER_DIM_); 
 	
-	if(dim > 0){
-		dim = (dim > BUFFER_DIM_) ? BUFFER_DIM_ : dim; 
-		
-		for(int i=0; i<dim; ++i){
+	if(m){
+		for(int i=0; i<BUFFER_DIM_; ++i){
 			v_[i] = m[i];
 		}
-		
+			
 		head_ = 0;
 		tail_ = dim-1;
 	} else{
@@ -89,12 +89,20 @@ int InertialDriver::size() const {
 	return BUFFER_DIM_; 
 }
 
+bool InertialDriver::isFull() const{
+	return head_ == (tail_+1)%BUFFER_DIM_;
+}
+
+bool InertialDriver::isFull() const{
+	return (head_ == -1 && tail_ == -1);
+}
+
 const Misura& InertialDriver::getFirst() const{
-	return (head >= 0) ? v_[head] : throw EmptyBufferException;
+	return (head_ >= 0) ? v_[head_] : throw EmptyBufferException;
 }
 
 const Misura& InertialDriver::getLast() const{
-	return (tail >= 0) ? v_[tail] : throw EmptyBufferException;
+	return (tail_ >= 0) ? v_[tail_] : throw EmptyBufferException;
 }
 
 const Misura& InertialDriver::get(int n) const {
@@ -102,10 +110,48 @@ const Misura& InertialDriver::get(int n) const {
 }
 
 
-void InertialDriver::push_back(const Lettura* arr){
+//l'array passato deve essere di 17 elementi 
+void InertialDriver::push_back(const Lettura* arr){	
+	if(isFull() || isEmpty()){
+		head_ = (head_+1)%BUFFER_DIM_;
+	} 
 	
+	tail_ = (tail_+1)%BUFFER_DIM_;
+	std::copy(arr, arr + v[tail_].size(), v[tail_]);
 }
 
 Lettura* InertialDriver::pop_front(){
+	if(isEmpty()){
+		throw EmptyBufferException;
+	}
 	
+	int aux = head_;
+	
+	if(head_ == tail_){
+		head = -1;
+		tail = -1;
+		return v_[aux];
+	}
+	
+	head_ = (head_+1)%BUFFER_DIM_;
+	return v_[aux];
+}
+
+void InertialDriver::clear_buffer(){}
+
+const Lettura& get_reading(int index) const{}
+
+std::ostream& operator<<(std::ostream& os, InertialDriver obj){
+	os << "[";
+	
+	for(int i=0; i<BUFFER_DIM_; ++i){
+		os << v_[i];
+		
+		if(i < BUFFER_DIM_-1){
+			os << "; ";
+		}
+	}
+	
+	os << "]\n";
+	return os;
 }

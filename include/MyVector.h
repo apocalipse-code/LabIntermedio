@@ -50,9 +50,5 @@ class MyVector{
 //è stato posto fuori dalla classe volutamente come scelta di design 
 template <typename T>
 std::ostream& operator<<(std::ostream& os, const MyVector<T>& mv);
- 
-
-// Includo l'implementazione dei template
-#include "MyVector.cpp"
 
 #endif

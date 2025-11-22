@@ -1,14 +1,15 @@
 #ifndef InertialDriver_h
 #define InertialDriver_h
 
-#include "MyVector.h"
-#include "Misura.h"
+#include "./MyVector.h"
+#include "./Misura.h"
+#include <ostream>
 
 class InertialDriver{
 	public:
 		InertialDriver(); //costruttore di default
 		InertialDriver(std::initializer_list<Misura> values); //costruttore con lista
-		InertialDriver(const Misura* m, int dim=0); //costruttore con array di Misure
+		InertialDriver(const Misura* m); //costruttore con array di Misure
 		InertialDriver(const InertialDriver& inDriver); //costruttore di copia
 		InertialDriver(InertialDriver&& inDriver); //costruttore di spostamento
 		
@@ -17,6 +18,8 @@ class InertialDriver{
 		InertialDriver& operator=(InertialDriver&& inDriver); //assegnamento di spostamento
 
 		int size() const; 
+		bool isFull() const;
+		bool isEmpty() const;
 		
 		const Misura& getFirst() const; //ritorna la prima misura inserita, o la più vecchia in generale se sovrascritta
 		const Misura& getLast() const; //ritorna l'ultima misura inserita
@@ -33,15 +36,12 @@ class InertialDriver{
 		class InvalidIndexException{}; 
 		
 	private: 
-		constexpr int BUFFER_DIM_ = 10; 
+		static constexpr int BUFFER_DIM_ = 10; 
 		MyVector<Misura> v_; 
 		int head_; //indice della misura più vecchia
 		int tail_; //indice della misura più recente
 };
 
-
-#include "MyVector.cpp"
-#include "Misura.cpp"
-#include "InertialDriver.cpp"
+std::ostream& operator<<(std::ostream& os, InertialDriver obj);
 
 #endif
