@@ -13,8 +13,7 @@ InertialDriver::InertialDriver(std::initializer_list<Misura> values):v_(values.s
 		head_ = 0; 
 		tail_ = values.size()-1; 
 	} else{
-		//se la lista è troppo grande, prendo solo i primi size() elementi
-		v_(size()); 
+		//se la lista è troppo grande, prendo solo i primi size() elementi 
 		for(int i=0; i<size(); ++i){
 			v_[i] = *(values.begin() + i);
 		}
@@ -115,7 +114,9 @@ void InertialDriver::push_back(const Lettura* arr){
 	} 
 	
 	tail_ = (tail_+1)%size();
-	std::copy(arr, arr + v_[tail_].size(), v_[tail_]);
+	
+	v_[tail_] = Misura(arr);
+	
 }
 
 const Lettura* InertialDriver::pop_front(){
@@ -132,7 +133,7 @@ const Lettura* InertialDriver::pop_front(){
 	}
 	
 	head_ = (head_+1)%size();
-	return v_[aux];
+	return v_[aux].get_letture();
 }
 
 void InertialDriver::clear_buffer() {
@@ -152,21 +153,21 @@ const Lettura& InertialDriver::get_reading(int index) const {
     }    
     // Verificare che l'indice dato sia valido (compreso tra 0 e il numero di misure)
 
-    if (index < 0 || index >= Misura::DIM_ ) {
+    if (index < 0 || index >= getLast().size() ) {
         throw InvalidIndexException{}; 					// L'indice è fuori dal range valido
     }
 
     // Accedo al vettore usando l'operatore [] di MyVector
-    return v_[v_.getLast()].get(index);
+    return getLast().get(index);
 }
 
 std::ostream& operator<<(std::ostream& os, InertialDriver obj){
 	os << "[";
 	
-	for(int i=0; i<size(); ++i){
-		os << obj.v_[i];
+	for(int i=0; i< obj.size(); ++i){
+		os << obj.get(i);
 		
-		if(i < size()-1){
+		if(i < obj.size()-1){
 			os << "; ";
 		}
 	}

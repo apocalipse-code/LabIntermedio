@@ -51,4 +51,5 @@ class MyVector{
 template <typename T>
 std::ostream& operator<<(std::ostream& os, const MyVector<T>& mv);
 
+#include "./MyVector.hpp"
 #endif
