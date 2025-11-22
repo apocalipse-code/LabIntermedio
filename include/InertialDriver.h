@@ -26,14 +26,14 @@ class InertialDriver{
 		const Misura& get(int n) const;//ritorna l'n-esima misura nel buffer, se l'indice è invalido lancia eccezione
 		
 		void push_back(const Lettura* arr); 
-		Lettura* pop_front(); 
+		const Lettura* pop_front(); 
 		
 		void clear_buffer(); 
 		const Lettura& get_reading(int index) const;  //lancia EmptyBufferException se tail < 0
 		
 		
 		class EmptyBufferException{}; 
-		class InvalidIndexException{}; 
+		class InvalidIndexException{};
 		
 	private: 
 		static constexpr int BUFFER_DIM_ = 10; 

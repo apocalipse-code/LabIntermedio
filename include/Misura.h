@@ -9,12 +9,8 @@ class Misura{
 		Misura();  //costruttore di default	
 		explicit Misura(const Lettura* arr); //costruttore con array come parametro 
 
-		//NOTA: DA FARE COSTRUTTORI E ASSEGNAZIONI DI COPIA E SPOSTAMENTO
 		Misura(const Misura& m);
-		Misura(Misura&& m);
-		
 		Misura& operator=(const Misura& m);
-		Misura& operator=(Misura&& m);
 	
 		const Lettura& get(int index) const; //ritorna un elemento all'indice passato
 		
