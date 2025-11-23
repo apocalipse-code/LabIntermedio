@@ -4,7 +4,7 @@
 #include <ostream>
 
 /*
-  * la classe MyVector<T> non accetta oggetti non assegnabili 
+  * la classe MyVector<T> non accetta oggetti/strutture non assegnabili 
 */
 
 template<typename T>

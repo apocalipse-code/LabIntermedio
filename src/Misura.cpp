@@ -13,11 +13,13 @@ Misura::Misura(const Lettura* arr):letture_{}{
 	}
 }
 
+//costruttore di copia
 Misura::Misura(const Misura& m){
 	std::copy(m.letture_, m.letture_+DIM_, letture_);
 }
 
 
+//assegnamento di copia
 Misura& Misura::operator=(const Misura& m){
 	if(this != &m){
 		std::copy(m.letture_, m.letture_+DIM_, letture_);
@@ -25,6 +27,7 @@ Misura& Misura::operator=(const Misura& m){
 	
 	return *this;
 }
+
 
 //funzione getter per gli elementi dell'array
 const Lettura& Misura::get(int index) const{
@@ -34,15 +37,19 @@ const Lettura& Misura::get(int index) const{
 	return letture_[index];
 }
 
+
+//ritorna un puntatore al primo elemento dell'array di letture
 const Lettura* Misura::get_letture() const{
 	return letture_;
 }
 
+//ritorna la dimensione dell'array di letture
 int Misura::size() const{
 	return DIM_;
 }
 
 
+//overloading operatore di stampa
 std::ostream& operator<<(std::ostream& os, const Misura& m){
 	os << "(";
 	for(int i=0; i< m.size(); ++i){
@@ -53,6 +60,6 @@ std::ostream& operator<<(std::ostream& os, const Misura& m){
 		}
 	}
 	
-	os << ")";
+	os << ");\n";
 	return os; 
 }
